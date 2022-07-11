@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Test lambda GitHub pages</title>
+    <script>
+        // define the callAPI function that takes a first name and last name as parameters
+        var callAPI = ()=>{
+            // instantiate a headers object
+            var myHeaders = new Headers();
+            // add content type header to object
+            myHeaders.append("Content-Type", "application/json");
+            // using built in JSON utility package turn object to string and store in a variable
+            var raw = JSON.stringify({
+                "test": {
+                    "test": true,
+                    "from": "web"
+                }
+            });
+            // create a JSON object with parameters for API call and store in a variable
+            var requestOptions = {
+                method: 'POST',
+                headers: myHeaders,
+                body: raw,
+                redirect: 'follow'
+            };
+            // make API call with parameters and use promises to get response
+            fetch("https://tbysg1jijj.execute-api.eu-west-3.amazonaws.com/dev", requestOptions)
+            .then(response => response.json())
+            .then(result => {
+                console.log(result)
+                document.getElementById('res').innerText = JSON.stringify(result,null,2)
+            })
+            .catch(error => console.log('error', error));
+        }
+    </script>
+</head>
+<body>
+    <pre id="res"></pre>
+    <button type="button" onclick="callAPI()">Call API</button>
+</body>
+</html>
